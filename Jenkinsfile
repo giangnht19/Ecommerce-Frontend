@@ -32,5 +32,16 @@ pipeline {
                 }
             }
         }
+        stage('Release') {
+            steps {
+                echo 'Releasing the app'
+
+                bat 'ssh -i new.pem ec2@3.25.198.246'
+
+                sh 'docker pull giangnht19/ecommerce:latest'
+
+                sh 'docker run -p 3000:3000 giangnht19/ecommerce:latest'
+            }
+        }
     }
 }
