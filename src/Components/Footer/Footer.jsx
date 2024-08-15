@@ -17,6 +17,7 @@ const Footer = () => {
         <li>Products</li>
         <li>Officer</li>
         <li>Affilate</li>
+        <li>Service</li>
         <li>About</li>
         <li>Contact</li>
         <li>Careers</li>
