@@ -17,7 +17,7 @@ pipeline {
                 echo 'Testing the app'
 
                 // Run Jest in CI mode to ensure it exits after tests
-                bat 'set CI=true && npm test'
+                bat 'npm test -- --watchAll=false'
             }
         }
         stage('Deploy') {
@@ -30,14 +30,6 @@ pipeline {
                     bat 'docker push giangnht19/ecommerce:latest'
                 }
             }
-        }
-    }
-
-    post {
-        always {
-            echo 'Cleaning up...'
-            bat 'docker logout'
-            bat 'docker system prune -af'
         }
     }
 }
