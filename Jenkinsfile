@@ -9,7 +9,7 @@ pipeline {
                 checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/giangnht19/Ecommerce-Frontend.git']])
 
                 bat 'npm install'
-                bat 'docker build -t giangnht19/ecommerce:latest -f Dockerfile .'
+                bat 'docker build -t giangnht19/ecommerce:latest .'
             }
         }
         stage('Test') {
