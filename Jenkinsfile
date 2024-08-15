@@ -37,7 +37,19 @@ pipeline {
                 sshagent(['SSH-key']) {
                     // echo 'Releasing the app'
                     sh 'docker pull giangnht19/ecommerce'
+                    sh 'docker stop ecommerce || true'
+                    sh 'docker rm ecommerce || true'
                     sh 'docker run -d -p 3000:3000 --name ecommerce giangnht19/ecommerce:latest'
+                }
+                withCredentials([sshUserPrivateKey(credentialsId: 'SSH-key', keyFileVariable: 'SSH-key')]) {
+                    ssh """
+                        ssh -i $SSH_KEY ec2-user@13.211.97.86 << EOF
+                        sh 'docker pull giangnht19/ecommerce'
+                        sh 'docker stop ecommerce || true'
+                        sh 'docker rm ecommerce || true'
+                        sh 'docker run -d -p 3000:3000 --name ecommerce giangnht19/ecommerce:latest'
+                        EOF
+                    """
                 }
             }
         }
