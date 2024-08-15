@@ -17,6 +17,8 @@ pipeline {
                 echo 'Testing the app'
 
                 bat 'docker run giangnht19/ecommerce:lastest npm run test'
+
+                bat 'q' // Exit the test
             }
         }
         stage('Deploy') {
