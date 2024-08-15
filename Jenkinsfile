@@ -34,11 +34,10 @@ pipeline {
         }
         stage('Release') {
             steps {
-                sshagent(['ec2-host-root-key']) {
-                    // echo 'Releasing the app'
-                    sh 'ssh -o StrictHostKeyChecking=no -l root 172.31.45.22 whoami'
-                    
-                }
+                sh 'docker pull giangnht19/ecommerce'
+                sh 'docker stop ecommerce || true'
+                sh 'docker rm ecommerce || true'
+                sh 'docker run -d -p 3000:3000 --name ecommerce giangnht19/ecommerce:latest'
             }
         }
     }
