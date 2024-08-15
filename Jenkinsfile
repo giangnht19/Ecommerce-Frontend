@@ -32,6 +32,10 @@ pipeline {
 
                     bat 'docker push giangnht19/ecommerce:latest'
 
+                    bat 'docker stop ecommerce'
+
+                    bat 'docker rm ecommerce'
+
                     bat 'docker run -d -p 3000:3000 --name ecommerce giangnht19/ecommerce:latest'
                 }
             }
