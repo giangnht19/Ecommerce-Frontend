@@ -43,7 +43,7 @@ pipeline {
                 }
                 withCredentials([sshUserPrivateKey(credentialsId: 'SSH-key', keyFileVariable: '')]) {
                     ssh """
-                        ssh -i $SSH_KEY ec2-user@13.211.97.86 << EOF
+                        ssh -i vockey.pem ec2-user@13.211.97.86 << EOF
                         sh 'docker pull giangnht19/ecommerce'
                         sh 'docker stop ecommerce || true'
                         sh 'docker rm ecommerce || true'
