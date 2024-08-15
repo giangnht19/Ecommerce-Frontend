@@ -32,5 +32,10 @@ pipeline {
                 }
             }
         }
+        stage('Release') {
+            steps {
+                bat 'ssh -i new.pem ec2-user@3.25.198.246'
+            }
+        }
     }
 }
