@@ -17,7 +17,9 @@ pipeline {
                 echo 'Testing the app'
 
                 // Run Jest in CI mode to ensure it exits after tests
-                bat 'npm run test'
+                timeout(time: 1, unit: 'MINUTES') {
+                    bat 'npm run test'
+                }
             }
         }
         stage('Deploy') {
