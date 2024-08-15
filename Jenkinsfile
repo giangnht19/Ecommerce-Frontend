@@ -17,7 +17,7 @@ pipeline {
                 echo 'Testing the app'
 
                 timeout(time: 1, unit: 'MINUTES') {
-                    bat 'npm test'
+                    bat 'npm run test'
                 }
 
                 echo 'Finish testing'
