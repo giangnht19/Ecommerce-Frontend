@@ -16,9 +16,7 @@ pipeline {
             steps {
                 echo 'Testing the app'
 
-                bat 'docker run giangnht19/ecommerce:lastest npm run test'
-
-                echo 'Exiting the test'
+                bat 'docker run --rm giangnht19/ecommerce:lastest cmd /c run-tests.bat'
             }
         }
         stage('Deploy') {
