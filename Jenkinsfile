@@ -17,7 +17,6 @@ pipeline {
                 echo 'Testing the app'
 
                 catchError(buildResult: 'SUCCESS') {
-                    // Run Jest in CI mode to ensure it exits after tests
                     bat 'npm run test'
                 }
             }
