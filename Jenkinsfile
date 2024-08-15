@@ -28,8 +28,6 @@ pipeline {
                 
                 withCredentials([string(credentialsId: 'dockerhub-pwd', variable: 'dockerhubpwd')]) {
                     bat 'docker login -u giangnht19 -p %dockerhubpwd%'
-                    
-                    docker.image('giangnht19/ecommerce:latest').push()
 
                     bat 'docker run -p 3000:3000 giangnht19/ecommerce:latest'
                 }
