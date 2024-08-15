@@ -39,7 +39,7 @@ const ShopContextProvider = ({ children }) => {
     };
 
     const getTotalCartItems = () => {
-        let totalItems = 0;
+        let totalItems = 1;
         for (const item in cartItems) {
             if (cartItems[item] > 0) {
                 totalItems += cartItems[item];
