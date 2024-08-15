@@ -18,7 +18,7 @@ pipeline {
             steps {
                 echo 'Testing the app'
 
-                bat 'mvn clean test'
+                bat 'mvn test'
             }
         }
         stage('Deploy') {
