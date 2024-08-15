@@ -36,7 +36,7 @@ pipeline {
             steps {
                 echo 'Releasing the app'
                     sshagent(['ec2-host-root-key']) {
-                        sh 'ssh -o StrictHostKeyChecking=no -i /var/lib/jenkins/.ssh/id_rsa'
+                        echo 'inside ec2-server'
                 }
             }
         }
