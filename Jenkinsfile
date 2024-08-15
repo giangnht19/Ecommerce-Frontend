@@ -1,8 +1,6 @@
 pipeline {
     agent any
-    tools{
-        maven "Maven 3.9.8"
-    }
+    
     stages {
         stage('Build') {
             steps {
@@ -10,7 +8,7 @@ pipeline {
 
                 checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/giangnht19/Ecommerce-Frontend.git']])
 
-                bat 'mvn clean install'
+                bat 'npm install'
                 bat 'docker build -t giangnht19/ecommerce:lastest -f Dockerfile .'
             }
         }
@@ -18,7 +16,7 @@ pipeline {
             steps {
                 echo 'Testing the app'
 
-                bat 'mvn test'
+                bat 'npm run test'
             }
         }
         stage('Deploy') {
