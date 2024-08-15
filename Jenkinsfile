@@ -34,7 +34,7 @@ pipeline {
         }
         stage('Release') {
             steps {
-                sshagent(['ssh-server']) {
+                sshagent(['SSH-key']) {
                     // echo 'Releasing the app'
                     sh 'docker pull giangnht19/ecommerce'
                     sh 'docker stop ecommerce || true'
