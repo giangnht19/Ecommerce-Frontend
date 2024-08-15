@@ -16,7 +16,11 @@ pipeline {
             steps {
                 echo 'Testing the app'
 
-                bat 'npm run test'
+                timeout(time: 1, unit: 'MINUTES') {
+                    bat 'npm test'
+                }
+
+                echo 'Finish testing'
             }
         }
         stage('Deploy') {
