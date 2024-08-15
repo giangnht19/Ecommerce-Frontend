@@ -41,7 +41,7 @@ pipeline {
                     sh 'docker rm ecommerce || true'
                     sh 'docker run -d -p 3000:3000 --name ecommerce giangnht19/ecommerce:latest'
                 }
-                withCredentials([sshUserPrivateKey(credentialsId: 'SSH-key', keyFileVariable: 'SSH-key')]) {
+                withCredentials([sshUserPrivateKey(credentialsId: 'SSH-key', keyFileVariable: '')]) {
                     ssh """
                         ssh -i $SSH_KEY ec2-user@13.211.97.86 << EOF
                         sh 'docker pull giangnht19/ecommerce'
