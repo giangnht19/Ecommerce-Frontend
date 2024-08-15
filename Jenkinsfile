@@ -35,13 +35,8 @@ pipeline {
         stage('Release') {
             steps {
                 echo 'Releasing the app'
-                withCredentials({string(credentialsId: 'dockerhub-pwd', variable: 'dockerhubpwd')}) {
-                    bat 'docker login -u giangnht19 -p %dockerhubpwd%'
-
-                    bat 'docker pull giangnht19/ecommerce'
-                    bat 'docker stop ecommerce || true'
-                    bat 'docker rm ecommerce || true'
-                    bat 'docker run -d -p 3000:3000 --name ecommerce giangnht19/ecommerce:latest'
+                    sshagent(['ec2-host-root-key']) {
+                        sh 'ssh -o StrictHostKeyChecking=no -i /var/lib/jenkins/.ssh/id_rsa'
                 }
             }
         }
