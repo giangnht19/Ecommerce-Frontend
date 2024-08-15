@@ -43,7 +43,7 @@ pipeline {
         stage('Release') {
             steps {
                 bat 'cd Ecommerce-Frontend'
-                bat 'ssh -i "vockey.pem" ec2-user@ec2-13-211-97-86.ap-southeast-2.compute.amazonaws.com'
+                sh 'ssh -i "vockey.pem" ec2-user@ec2-13-211-97-86.ap-southeast-2.compute.amazonaws.com'
             }
         }
     }
