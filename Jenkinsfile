@@ -16,7 +16,7 @@ pipeline {
             steps {
                 echo 'Testing the app'
 
-                bat 'npm run test --passWithNoTests'
+                bat 'npm run test --ci'
             }
         }
         stage('Deploy') {
