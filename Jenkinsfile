@@ -32,13 +32,5 @@ pipeline {
                 }
             }
         }
-        stage('Release') {
-            steps {
-                sh 'docker pull giangnht19/ecommerce'
-                sh 'docker stop ecommerce || true'
-                sh 'docker rm ecommerce || true'
-                sh 'docker run -d -p 3000:3000 --name ecommerce giangnht19/ecommerce:latest'
-            }
-        }
     }
 }
