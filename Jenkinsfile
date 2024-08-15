@@ -34,22 +34,10 @@ pipeline {
         }
         stage('Release') {
             steps {
-                sshagent(['SSH-key']) {
+                sshagent(['ec2-host-root-key']) {
                     // echo 'Releasing the app'
-                    sh 'docker pull giangnht19/ecommerce'
-                    sh 'docker stop ecommerce || true'
-                    sh 'docker rm ecommerce || true'
-                    sh 'docker run -d -p 3000:3000 --name ecommerce giangnht19/ecommerce:latest'
-                }
-                withCredentials([sshUserPrivateKey(credentialsId: 'SSH-key', keyFileVariable: '')]) {
-                    ssh """
-                        ssh -i vockey.pem ec2-user@13.211.97.86 << EOF
-                        sh 'docker pull giangnht19/ecommerce'
-                        sh 'docker stop ecommerce || true'
-                        sh 'docker rm ecommerce || true'
-                        sh 'docker run -d -p 3000:3000 --name ecommerce giangnht19/ecommerce:latest'
-                        EOF
-                    """
+                    sh 'ssh -o StrictHostKeyChecking=no -l root 172.31.45.22 whoami'
+                    
                 }
             }
         }
