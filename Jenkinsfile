@@ -8,7 +8,6 @@ pipeline {
 
                 checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/giangnht19/Ecommerce-Frontend.git']])
 
-                bat 'npm install'
                 bat 'docker build -t giangnht19/ecommerce:lastest .'
             }
         }
@@ -16,8 +15,9 @@ pipeline {
             steps {
                 echo 'Testing the app'
 
-                bat 'npm install'
                 bat 'docker run --rm giangnht19/ecommerce:lastest npm run test'
+                bat 'w'
+                bat 'q'
             }
         }
         stage('Deploy') {
