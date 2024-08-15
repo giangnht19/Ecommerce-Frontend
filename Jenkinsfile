@@ -29,8 +29,6 @@ pipeline {
                     bat 'docker login -u giangnht19 -p %dockerhubpwd%'
 
                     bat 'docker push giangnht19/ecommerce:latest'
-
-                    bat 'docker run -p 3000:3000 giangnht19/ecommerce:latest'
                 }
             }
         }
