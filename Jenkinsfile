@@ -36,11 +36,11 @@ pipeline {
 
                     bat 'docker push %IMAGE_NAME%:%IMAGE_TAG%'
 
-                    bat "docker stop \$(docker ps -q -f \"publish=3000\")"
+                    bat 'docker stop %IMAGE_NAME%'
 
-                    bat 'docker rm \$(docker ps -q -f \"publish=3000\")'
+                    bat 'docker rm %IMAGE_NAME%'
 
-                    bat 'docker run -d -p 3000:3000 %IMAGE_NAME%:%IMAGE_TAG%'
+                    bat 'docker run -d -p 3000:3000 %IMAGE_NAME% %IMAGE_NAME%:%IMAGE_TAG%'
                 }
             }
         }
@@ -53,7 +53,7 @@ pipeline {
 
                 bat 'docker push registry.heroku.com/%APP_NAME%/web'
 
-                bat 'heroku container:release web -a fashfrenzy'
+                bat 'heroku container:release web --app=%APP_NAME%'
             }
         }
     }
