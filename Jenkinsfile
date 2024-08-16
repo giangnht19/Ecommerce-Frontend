@@ -36,6 +36,8 @@ pipeline {
                     bat 'docker tag giangnht19/ecommerce:latest registry.heroku.com/fashfrenzy/web'
                     bat 'docker push registry.heroku.com/fashfrenzy/web'
                 }
+            }
+        }
         stage('Release') {
             steps {
                 echo 'Releasing the app'
