@@ -35,9 +35,11 @@ pipeline {
             steps {
                 echo 'Deploying the app'
                 
+                bat "npm install -g heroku"
                 // Login to Heroku Docker registry
-                echo 'Logging in to Heroku'
-                bat 'echo %HEROKU_API_KEY% | docker login --username=_ --password-stdin registry.heroku.com'
+                withCredentials([usernamePassword(credentialsId: 'herokuid', passwordVariable: 'PWD', usernameVariable: 'USR')]) {
+                    bat 'echo %PWD% | docker login --username=%USR% --password-stdin registry.heroku.com'
+                }
 
                 // Tag the Docker image
                 echo 'Tagging the image'
