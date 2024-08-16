@@ -42,7 +42,15 @@ pipeline {
         stage('Release') {
             steps {
                 echo 'Releasing the app'
-                echo 'Deployed successfully'
+                withCredentials([string(credentialsId: 'heroku-api', variable: 'HEROKU_API_KEY')]) {
+                    bat 'echo %HEROKU_API_KEY% | docker login --username=_ --password-stdin registry.heroku.com'
+                    
+                    // Push the Docker image to Heroku container registry
+                    bat 'docker push registry.heroku.com/YOUR_HEROKU_APP_NAME/web'
+                    
+                    // Release the image
+                    bat 'heroku container:release web --app YOUR_HEROKU_APP_NAME'
+                }
             }
         }
     }
