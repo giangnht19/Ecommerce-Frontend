@@ -40,7 +40,7 @@ pipeline {
 
                     bat 'docker rm %IMAGE_NAME%'
 
-                    bat 'docker run -d -p 3000:3000 %IMAGE_NAME% %IMAGE_NAME%:%IMAGE_TAG%'
+                    bat 'docker run -d -p 3000:3000 --name %IMAGE_NAME% %IMAGE_NAME%:%IMAGE_TAG%'
                 }
             }
         }
