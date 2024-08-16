@@ -1,8 +1,5 @@
 pipeline {
     agent any
-    environment {
-        HEROKU_API_KEY = credentials('heroku-api')
-    }
     stages {
         stage('Build') {
             steps {
@@ -26,10 +23,9 @@ pipeline {
         }
         stage ('Deploy') {
             steps {
-                echo 'Setup Heroku CLI'
                 echo 'Deploying to Heroku'
                 withCredentials([string(credentialsId: 'heroku-api', variable : 'HEROKU_API' )]) {
-                    bat 'docker login --username=_ --password=%HEROKU_API_KEY% registry.heroku.com'
+                    bat 'docker login --username=_ --password=%HEROKU_API% registry.heroku.com'
                     bat 'docker tag giangnht19/ecommerce:latest registry.heroku.com/fashfrenzy/web'
                     bat 'docker push registry.heroku.com/fashfrenzy/web'
                 }
@@ -38,7 +34,9 @@ pipeline {
         stage('Release') {
             steps {
                 echo 'Releasing the app'
-                    
+                
+                bat 'npm npm install -g heroku'
+
                 bat 'git push heroku main'
             }
         }
