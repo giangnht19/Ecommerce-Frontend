@@ -48,6 +48,8 @@ pipeline {
                 bat 'docker tag %IMAGE_NAME%:%IMAGE_TAG% registry.heroku.com/%APP_NAME%/web'
 
                 bat 'docker push registry.heroku.com/%APP_NAME%/web'
+
+                bat 'heroku container:release web --app=%APP_NAME%'
             }
         }
     }
