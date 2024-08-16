@@ -24,7 +24,7 @@ pipeline {
                 echo 'Deploying the app'
                 
                 echo 'Logging in to Heroku'
-                bat ' docker login --username=_ --password-stdin registry.heroku.com'
+                bat 'echo "credentials('heroku-api')" | docker login --username=_ --password-stdin registry.heroku.com'
 
                 echo 'Tagging the image'
                 bat 'docker tag giangnht19/fashfrenzy:lastest registry.heroku.com/fashfrenzy/web'
