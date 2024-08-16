@@ -7,6 +7,8 @@ pipeline {
 
                 checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/giangnht19/Ecommerce-Frontend.git']])
 
+                bat 'rm -rf Ecommerce-Frontend'
+
                 bat 'git clone https://github.com/giangnht19/Ecommerce-Frontend.git'
 
                 bat 'cd Ecommerce-Frontend'
