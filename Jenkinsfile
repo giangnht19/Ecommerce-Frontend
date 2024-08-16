@@ -34,6 +34,7 @@ pipeline {
 
                 withCredentials([string(credentialsId: 'dockerhub-pwd', variable: 'dockerhubpwd')]) {
                     bat 'docker login -u giangnht19 -p %dockerhubpwd%'
+
                     bat 'docker stop ecommerce'
                     bat 'docker rm ecommerce'
                     bat 'docker push %IMAGE_NAME%:%IMAGE_TAG%'
@@ -53,10 +54,16 @@ pipeline {
         }
     }
     post {
+        always {
+            echo 'Cleaning up'
+            bat 'docker logout'
+            bat 'docker system prune -f'
+            echo 'Build completed'
+        }
         success {
             script {
                 archiveArtifacts artifacts: '**/*', excludes: ''
-                mail to: "%EMAIL_RECIPIENT%",
+                mail to: "${env.EMAIL_RECIPIENT}",
                      subject: "Pipeline Status",
                      body: "${currentBuild.currentResult}",
                      attachmentsPattern: 'archive/**/*.log'
@@ -65,7 +72,7 @@ pipeline {
         failure {
             script {
                 archiveArtifacts artifacts: '**/*', excludes: ''
-                mail to: "%EMAIL_RECIPIENT%",
+                mail to: "${env.EMAIL_RECIPIENT}",
                      subject: "Build Failed",
                      body: "${currentBuild.currentResult}",
                      attachmentsPattern: 'archive/**/*.log'
