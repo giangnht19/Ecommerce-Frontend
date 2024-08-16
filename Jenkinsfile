@@ -39,11 +39,7 @@ pipeline {
         stage('Release') {
             steps {
                 echo 'Releasing the app'
-                
-                bat 'git add .'
-
-                bat 'git commit -m "Release"'
-
+            
                 bat 'git push heroku main'
             }
         }
