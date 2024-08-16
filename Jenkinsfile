@@ -37,7 +37,7 @@ pipeline {
 
                     bat 'docker push %IMAGE_NAME%:%IMAGE_TAG%'
 
-                    bat 'docker run -d -p 3000:3000 --name %IMAGE_NAME% %IMAGE_NAME%:%IMAGE_TAG%'
+                    bat 'docker run -d -p 3000:3000 --name ecommerce %IMAGE_NAME%:%IMAGE_TAG%'
 
                     
                 }
