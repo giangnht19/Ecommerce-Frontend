@@ -1,6 +1,8 @@
 pipeline {
     agent any
-
+    environment {
+        HEROKU_API = credentials('heroku-api')
+    }
     stages {
         stage('Build') {
             steps {
@@ -25,7 +27,7 @@ pipeline {
                 echo 'Deploying the app'
                 
                 echo 'Logging in to Heroku'
-                bat 'echo credentials('heroku-api') | docker login --username=_ --password-stdin registry.heroku.com'
+                bat 'echo ${HEROKU_API} | docker login --username=_ --password-stdin registry.heroku.com'
 
                 echo 'Tagging the image'
                 bat 'docker tag giangnht19/fashfrenzy:lastest registry.heroku.com/fashfrenzy/web'
