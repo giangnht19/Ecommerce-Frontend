@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    tools {
+        heroku 'heroku'
+    }
     stages {
         stage('Build') {
             steps {
@@ -35,9 +38,7 @@ pipeline {
             steps {
                 echo 'Releasing the app'
                 
-                bat 'npm install -g heroku'
-
-                bat 'heroku container:release web -a fashfrenzy'
+                bat 'git clone '
             }
         }
     }
