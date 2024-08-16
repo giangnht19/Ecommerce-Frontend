@@ -1,8 +1,5 @@
 pipeline {
     agent any
-    tools {
-        heroku 'heroku'
-    }
     stages {
         stage('Build') {
             steps {
@@ -10,6 +7,9 @@ pipeline {
 
                 checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/giangnht19/Ecommerce-Frontend.git']])
 
+                bat 'git clone https://github.com/giangnht19/Ecommerce-Frontend.git'
+
+                bat 'cd Ecommerce-Frontend'
 
                 bat 'npm install'
                 bat 'docker build -t giangnht19/ecommerce:latest .'
@@ -38,7 +38,11 @@ pipeline {
             steps {
                 echo 'Releasing the app'
                 
-                bat 'heroku container:release web --app=fashfrenzy'
+                bat '''
+                git add .
+                git commit -m "Release"
+                git push heroku main
+                '''
             }
         }
     }
