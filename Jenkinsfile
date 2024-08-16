@@ -28,12 +28,11 @@ pipeline {
         }
         stage ('Deploy') {
             steps {
-                echo 'Deploying to Docker Container'
+                echo 'Deploying to Docker Hub'
 
                 withCredentials([string(credentialsId: 'dockerhub-pwd', variable: 'dockerhubpwd')]) {
                     bat 'docker login -u giangnht19 -p %dockerhubpwd%'
                     bat 'docker push %IMAGE_NAME%:%IMAGE_TAG%'
-                    bat 'docker run -d -p 3000:3000 --name ecommerce %IMAGE_NAME%:%IMAGE_TAG%'
                 }
 
                 echo 'Deploy Heroku Registry'
