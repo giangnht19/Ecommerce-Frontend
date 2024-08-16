@@ -34,12 +34,14 @@ pipeline {
                 withCredentials([string(credentialsId: 'dockerhub-pwd', variable: 'dockerhubpwd')]) {
                     bat 'docker login -u giangnht19 -p %dockerhubpwd%'
 
+                    bat 'docker stop ecommerce'
+
+                    bat 'docker rm ecommerce'
 
                     bat 'docker push %IMAGE_NAME%:%IMAGE_TAG%'
 
                     bat 'docker run -d -p 3000:3000 --name ecommerce %IMAGE_NAME%:%IMAGE_TAG%'
 
-                    
                 }
             }
         }
