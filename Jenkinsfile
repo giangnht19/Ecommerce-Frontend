@@ -38,7 +38,7 @@ pipeline {
                 echo 'Setting up Heroku'
                 bat "npm install -g heroku"
                 // Login to Heroku Docker registry
-                bat 'echo %HEROKU_API_KEY% | docker login --username=_ --password-stdin registry.heroku.com'
+                bat 'echo %HEROKU_API_KEY% | docker login --username=gn601800@gmail.com --password-stdin registry.heroku.com'
 
                 // Tag the Docker image
                 echo 'Tagging the image'
