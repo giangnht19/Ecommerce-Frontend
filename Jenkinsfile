@@ -40,7 +40,7 @@ pipeline {
             steps {
                 echo 'Releasing the app'
                     
-                at 'heroku container:release web --app=fashfrenzy'
+                at 'git push heroku main'
             }
         }
     }
