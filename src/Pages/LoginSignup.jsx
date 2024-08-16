@@ -15,7 +15,7 @@ const LoginSignup = () => {
   const login = async () => {
     console.log('Login', form)
     let responseData;
-    await fetch('http://localhost:4000/login', {
+    await fetch('https://ecommerce-backend-r9wf.onrender.com/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -38,7 +38,7 @@ const LoginSignup = () => {
   const signup = async () => {
     console.log('Sign Up', form)
     let responseData;
-    await fetch('http://localhost:4000/register', {
+    await fetch('https://ecommerce-backend-r9wf.onrender.com/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
