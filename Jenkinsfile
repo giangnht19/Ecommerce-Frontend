@@ -5,7 +5,6 @@ pipeline {
         IMAGE_NAME = 'giangnht19/fashfrezy'
         IMAGE_TAG = 'latest'
         APP_NAME = 'fashfrenzy'
-        EMAIL_RECIPIENT = 'gn601800@gmail.com'
     }
     stages {
         stage('Build') {
@@ -59,24 +58,6 @@ pipeline {
             bat 'docker system prune -f'
             bat 'docker logout'
             echo 'Build completed'
-        }
-        success {
-            script {
-                archiveArtifacts artifacts: '**/*', excludes: ''
-                mail to: "${env.EMAIL_RECIPIENT}",
-                     subject: "Pipeline Status",
-                     body: "Pipeline: ${currentBuild.currentResult}",
-                     attachmentsPattern: 'archive/**/*.log'
-            }
-        }
-        failure {
-            script {
-                archiveArtifacts artifacts: '**/*', excludes: ''
-                mail to: "${env.EMAIL_RECIPIENT}",
-                     subject: "Build Failed",
-                     body: "Pipeline: ${currentBuild.currentResult}",
-                     attachmentsPattern: 'archive/**/*.log'
-            }
         }
     }
 }
