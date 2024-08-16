@@ -24,35 +24,21 @@ pipeline {
                 }
             }
         }
-        stage('Deploy') {
+        stage ('Deploy') {
             steps {
-                echo 'Deploying the app'
-                
-                withCredentials([string(credentialsId: 'dockerhub-pwd', variable: 'dockerhubpwd')]) {
-                    bat 'docker login -u giangnht19 -p %dockerhubpwd%'
-
-                    bat 'docker push giangnht19/ecommerce:latest'
-
-                    bat 'docker stop ecommerce'
-
-                    bat 'docker rm ecommerce'
-
-                    bat 'docker run -d -p 3000:3000 --name ecommerce giangnht19/ecommerce:latest'
+                echo 'Setup Heroku CLI'
+                bat 'curl https://cli-assets.heroku.com/install.bat | bat'
+                echo 'Deploying to Heroku'
+                withCredentials([string(credentialsId: 'heroku-api', variable : 'HEROKU_API' )]) {
+                    bat 'docker login --username=_ --password=%HEROKU_API_KEY% registry.heroku.com'
+                    bat 'docker tag giangnht19/ecommerce:latest registry.heroku.com/fashfrenzy/web'
+                    bat 'docker push registry.heroku.com/fashfrenzy/web'
                 }
-            }
-        }
         stage('Release') {
             steps {
                 echo 'Releasing the app'
-                withCredentials([string(credentialsId: 'heroku-api', variable: 'HEROKU_API_KEY')]) {
-                    bat 'docker login --username=_ --password=%HEROKU_API_KEY% registry.heroku.com'
                     
-                    bat 'docker tag giangnht19/ecommerce:latest registry.heroku.com/fashfrenzy/web'
-
-                    bat 'docker push registry.heroku.com/fashfrenzy/web'
-
-                    bat 'heroku container:release web --app=fashfrenzy'
-                }
+                at 'heroku container:release web --app=fashfrenzy'
             }
         }
     }
