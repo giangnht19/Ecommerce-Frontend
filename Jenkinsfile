@@ -26,11 +26,19 @@ pipeline {
         }
         stage ('Deploy') {
             steps {
-                echo 'Deploying to Heroku'
-                withCredentials([string(credentialsId: 'heroku-api', variable : 'HEROKU_API' )]) {
-                    bat 'docker login --username=_ --password=%HEROKU_API% registry.heroku.com'
-                    bat 'docker tag giangnht19/ecommerce:latest registry.heroku.com/fashfrenzy/web'
-                    bat 'docker push registry.heroku.com/fashfrenzy/web'
+                echo 'Deploying to Docker Container'
+                
+
+                withCredentials([string(credentialsId: 'dockerhub-pwd', variable: 'dockerhubpwd')]) {
+                    bat 'docker login -u giangnht19 -p %dockerhubpwd%'
+
+                    bat 'docker push giangnht19/ecommerce:latest'
+
+                    bat 'docker stop ecommerce'
+
+                    bat 'docker rm ecommerce'
+
+                    bat 'docker run -d -p 3000:3000 giangnht19/ecommerce:latest'
                 }
             }
         }
@@ -38,11 +46,11 @@ pipeline {
             steps {
                 echo 'Releasing the app'
                 
-                bat '''
-                git add .
-                git commit -m "Release"
-                git push heroku main
-                '''
+                bat 'git add .'
+
+                bat 'git commit -m "Release"'
+
+                bat 'git push heroku main'
             }
         }
     }
