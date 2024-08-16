@@ -51,7 +51,7 @@ pipeline {
 
                     bat 'docker push registry.heroku.com/fashfrenzy/web'
 
-                    bat 'heroku container:release web -a fashfrenzy'
+                    bat 'heroku container:release web --app=fashfrenzy'
                 }
             }
         }
