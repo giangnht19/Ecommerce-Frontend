@@ -1,6 +1,8 @@
 pipeline {
     agent any
-    
+    environment {
+        HEROKU_API_KEY = credentials('heroku-api')
+    }
     stages {
         stage('Build') {
             steps {
@@ -43,7 +45,7 @@ pipeline {
             steps {
                 echo 'Releasing the app'
                 withCredentials([string(credentialsId: 'heroku-api', variable: 'HEROKU_API_KEY')]) {
-                    bat 'echo %HEROKU_API_KEY% | docker login --username=_ --password-stdin registry.heroku.com'
+                    bat 'docker login --username=_ --password=%HEROKU_API_KEY% registry.heroku.com'
                     
                     // Push the Docker image to Heroku container registry
                     bat 'docker push registry.heroku.com/fashfrenzy/web'
