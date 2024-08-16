@@ -27,7 +27,6 @@ pipeline {
         stage ('Deploy') {
             steps {
                 echo 'Setup Heroku CLI'
-                bat 'npm install -g heroku'
                 echo 'Deploying to Heroku'
                 withCredentials([string(credentialsId: 'heroku-api', variable : 'HEROKU_API' )]) {
                     bat 'docker login --username=_ --password=%HEROKU_API_KEY% registry.heroku.com'
@@ -40,7 +39,7 @@ pipeline {
             steps {
                 echo 'Releasing the app'
                     
-                at 'git push heroku main'
+                bat 'git push heroku main'
             }
         }
     }
