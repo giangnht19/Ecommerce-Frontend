@@ -32,9 +32,9 @@ pipeline {
 
                     bat 'docker push giangnht19/ecommerce:latest'
 
-                    bat 'docker stop giangnht19/ecommerce:latest'
+                    bat 'docker stop giangnht19/ecommerce'
 
-                    bat 'docker rm giangnht19/ecommerce:latest'
+                    bat 'docker rm giangnht19/ecommerce'
 
                     bat 'docker run -d -p 3000:3000 giangnht19/ecommerce:latest'
                 }
