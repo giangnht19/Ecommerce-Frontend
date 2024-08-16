@@ -35,6 +35,7 @@ pipeline {
             steps {
                 echo 'Deploying the app'
                 
+                echo 'Setting up Heroku'
                 bat "npm install -g heroku"
                 // Login to Heroku Docker registry
                 bat 'echo %HEROKU_API_KEY% | docker login --username=_ --password-stdin registry.heroku.com'
