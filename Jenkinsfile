@@ -38,7 +38,7 @@ pipeline {
             steps {
                 echo 'Releasing the app'
                 
-                bat 'git clone '
+                bat 'heroku container:release web --app=fashfrenzy'
             }
         }
     }
