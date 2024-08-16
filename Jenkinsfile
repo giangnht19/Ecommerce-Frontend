@@ -46,10 +46,10 @@ pipeline {
                     bat 'echo %HEROKU_API_KEY% | docker login --username=_ --password-stdin registry.heroku.com'
                     
                     // Push the Docker image to Heroku container registry
-                    bat 'docker push registry.heroku.com/YOUR_HEROKU_APP_NAME/web'
+                    bat 'docker push registry.heroku.com/fashfrenzy/web'
                     
                     // Release the image
-                    bat 'heroku container:release web --app YOUR_HEROKU_APP_NAME'
+                    bat 'heroku container:release web --app fashfrenzy'
                 }
             }
         }
