@@ -65,7 +65,7 @@ pipeline {
                 archiveArtifacts artifacts: '**/*', excludes: ''
                 mail to: "${env.EMAIL_RECIPIENT}",
                      subject: "Pipeline Status",
-                     body: "${currentBuild.currentResult}",
+                     body: "Pipeline: ${currentBuild.currentResult}",
                      attachmentsPattern: 'archive/**/*.log'
             }
         }
@@ -74,7 +74,7 @@ pipeline {
                 archiveArtifacts artifacts: '**/*', excludes: ''
                 mail to: "${env.EMAIL_RECIPIENT}",
                      subject: "Build Failed",
-                     body: "${currentBuild.currentResult}",
+                     body: "Pipeline: ${currentBuild.currentResult}",
                      attachmentsPattern: 'archive/**/*.log'
             }
         }
