@@ -29,6 +29,8 @@ pipeline {
                 echo 'Setup Heroku CLI'
                 bat 'npm install -g heroku'
                 echo 'Deploying to Heroku'
+                bat 'docker stop registry.heroku.com/fashfrenzy/web || true'
+                bat 'docker rm registry.heroku.com/fashfrenzy/web || true'
                 withCredentials([string(credentialsId: 'heroku-api', variable : 'HEROKU_API' )]) {
                     bat 'docker login --username=_ --password=%HEROKU_API_KEY% registry.heroku.com'
                     bat 'docker tag giangnht19/ecommerce:latest registry.heroku.com/fashfrenzy/web'
