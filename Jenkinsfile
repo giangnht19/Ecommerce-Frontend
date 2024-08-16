@@ -37,7 +37,7 @@ pipeline {
                 
                 bat 'npm npm install -g heroku'
 
-                bat 'git push heroku main'
+                bat 'heroku container:release web -a fashfrenzy'
             }
         }
     }
