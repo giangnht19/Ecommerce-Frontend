@@ -47,11 +47,11 @@ pipeline {
                 withCredentials([string(credentialsId: 'heroku-api', variable: 'HEROKU_API_KEY')]) {
                     bat 'docker login --username=_ --password=%HEROKU_API_KEY% registry.heroku.com'
                     
-                    // Push the Docker image to Heroku container registry
+                    bat 'docker tag giangnht19/ecommerce:latest registry.heroku.com/fashfrenzy/web'
+
                     bat 'docker push registry.heroku.com/fashfrenzy/web'
-                    
-                    // Release the image
-                    bat 'heroku container:release web --app fashfrenzy'
+
+                    bat 'heroku container:release web -a fashfrenzy'
                 }
             }
         }
