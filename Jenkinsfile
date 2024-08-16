@@ -36,6 +36,10 @@ pipeline {
 
                     bat 'docker push %IMAGE_NAME%:%IMAGE_TAG%'
 
+                    bat 'docker stop %IMAGE_NAME%:%IMAGE_TAG%'
+
+                    bat 'docker rm %IMAGE_NAME%:%IMAGE_TAG%'
+
                     bat 'docker run -d -p 3000:3000 %IMAGE_NAME%:%IMAGE_TAG%'
                 }
             }
