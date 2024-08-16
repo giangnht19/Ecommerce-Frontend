@@ -13,8 +13,11 @@ RUN npm install
 # Copy the rest of the application code to the working directory
 COPY . .
 
-# Expose a port (if needed)
-EXPOSE 3000
-
 # Define the command to run your application
 CMD [ "npm", "start" ]
+
+FROM httpd:alpine
+WORKDIR /usr/local/apache2/htdocs/
+COPY --from=build /build/buid/ .
+RUN chown -R www-data:www-data /usr/local/apache2/htdocs/ \
+    && sed -i "s/Listen 80/Listen \${PORT}/g" /usr/local/apache2/conf/httpd.conf
