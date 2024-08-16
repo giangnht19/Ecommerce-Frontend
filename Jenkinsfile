@@ -32,7 +32,7 @@ pipeline {
                 
 
                 withCredentials([string(credentialsId: 'dockerhub-pwd', variable: 'dockerhubpwd')]) {
-                    bat ' echo %dockerpwd% |docker login -u giangnht19 --password-stdin'
+                    bat 'docker login -u giangnht19 -p %dockerhubpwd%'
 
                     bat 'docker push %IMAGE_NAME%:%IMAGE_TAG%'
 
