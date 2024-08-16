@@ -1,9 +1,5 @@
 pipeline {
     agent any
-    environment {
-        HEROKU_API_KEY = credentials('heroku-api')
-        APP_NAME = 'fashfrenzy'
-    }
     stages {
         stage('Build') {
             steps {
@@ -28,28 +24,28 @@ pipeline {
                 echo 'Deploying the app'
                 
                 echo 'Logging in to Heroku'
-                bat 'echo ${HEROKU_API_KEY} | docker login --username=_ --password-stdin registry.heroku.com'
+                bat 'echo credentials('heroku-api') | docker login --username=_ --password-stdin registry.heroku.com'
 
                 echo 'Tagging the image'
-                bat 'docker tag giangnht19/fashfrenzy:lastest registry.heroku.com/${APP_NAME}/web'
+                bat 'docker tag giangnht19/fashfrenzy:lastest registry.heroku.com/fashfrenzy/web'
                 
                 echo 'Pushing the image'
-                bat 'docker push registry.heroku.com/${APP_NAME}/web'
+                bat 'docker push registry.heroku.com/fashfrenzy/web'
             }
         }
         stage('Release') {
             steps {
                 echo 'Releasing the image'
 
-                bat 'heroku container:release web --app ${APP_NAME}'
+                bat 'heroku container:release web --app fashfrenzy'
             }
         }
     }
     post {
         always {
             echo 'Cleaning up'
-            bat 'docker rmi $IMAGE_NAME:$IMAGE_TAG'
-            bat 'docker rmi registry.heroku.com/${APP_NAME}/web'
+            bat 'docker rmi giangnht19/fashfrenzy:lastest'
+            bat 'docker rmi registry.heroku.com/fashfrenzy/web'
             bat 'docker logout registry.heroku.com'
         }
     }
