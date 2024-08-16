@@ -3,7 +3,7 @@ pipeline {
     environment {
         HEROKU_API_KEY = credentials('heroku-api')
         IMAGE_NAME = 'giangnht19/fashfrenzy'
-        IMAGE_TAG = 'latest' // Corrected the spelling from 'lastest' to 'latest'
+        IMAGE_TAG = 'latest'
         APP_NAME = 'fashfrenzy'
     }
     stages {
