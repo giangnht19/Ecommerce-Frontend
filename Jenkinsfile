@@ -53,7 +53,7 @@ pipeline {
 
                 bat 'docker push registry.heroku.com/%APP_NAME%/web'
 
-                bat 'heroku container:release web --app=%APP_NAME%'
+                bat 'heroku container:release web -a %APP_NAME%'
             }
         }
     }
