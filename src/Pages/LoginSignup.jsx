@@ -4,6 +4,8 @@ import { useState } from 'react'
 
 const LoginSignup = () => {
 
+  const server = 'https://ecommerce-backend-l8jr.onrender.com';
+
   const [state, setState] = useState("Login")
 
   const [form, setForm] = useState({
@@ -15,7 +17,7 @@ const LoginSignup = () => {
   const login = async () => {
     console.log('Login', form)
     let responseData;
-    await fetch('http://localhost:4000/login', {
+    await fetch(`${server}/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -38,7 +40,7 @@ const LoginSignup = () => {
   const signup = async () => {
     console.log('Sign Up', form)
     let responseData;
-    await fetch('http://localhost:4000/register', {
+    await fetch(`${server}/register`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
