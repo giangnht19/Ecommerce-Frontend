@@ -5,6 +5,7 @@ pipeline {
         IMAGE_NAME = 'giangnht19/fashfrezy'
         IMAGE_TAG = 'latest'
         APP_NAME = 'fashfrenzy'
+        EMAIL_RECIPIENT = 'gn601800@gmail.com'
     }
     stages {
         stage('Build') {
@@ -33,13 +34,9 @@ pipeline {
 
                 withCredentials([string(credentialsId: 'dockerhub-pwd', variable: 'dockerhubpwd')]) {
                     bat 'docker login -u giangnht19 -p %dockerhubpwd%'
-
                     bat 'docker stop ecommerce'
-
                     bat 'docker rm ecommerce'
-
                     bat 'docker push %IMAGE_NAME%:%IMAGE_TAG%'
-
                     bat 'docker run -d -p 3000:3000 --name ecommerce %IMAGE_NAME%:%IMAGE_TAG%'
 
                 }
@@ -49,12 +46,29 @@ pipeline {
             steps {
                 echo 'Releasing the app'
                 bat 'docker login --username=_ --password=%HEROKU_API_KEY% registry.heroku.com'
-
                 bat 'docker tag %IMAGE_NAME%:%IMAGE_TAG% registry.heroku.com/%APP_NAME%/web'
-
                 bat 'docker push registry.heroku.com/%APP_NAME%/web'
-
                 bat 'heroku container:release web -a %APP_NAME%'
+            }
+        }
+    }
+    post {
+        success {
+            script {
+                archiveArtifacts artifacts: '**/*', excludes: ''
+                mail to: "%EMAIL_RECIPIENT%",
+                     subject: "Pipeline Status",
+                     body: "${currentBuild.currentResult}",
+                     attachmentsPattern: 'archive/**/*.log'
+            }
+        }
+        failure {
+            script {
+                archiveArtifacts artifacts: '**/*', excludes: ''
+                mail to: "%EMAIL_RECIPIENT%",
+                     subject: "Build Failed",
+                     body: "${currentBuild.currentResult}",
+                     attachmentsPattern: 'archive/**/*.log'
             }
         }
     }
