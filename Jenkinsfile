@@ -35,7 +35,7 @@ pipeline {
             steps {
                 echo 'Releasing the app'
                 
-                bat 'npm npm install -g heroku'
+                bat 'npm install -g heroku'
 
                 bat 'heroku container:release web -a fashfrenzy'
             }
