@@ -27,7 +27,7 @@ pipeline {
         stage ('Deploy') {
             steps {
                 echo 'Setup Heroku CLI'
-                bat 'curl https://cli-assets.heroku.com/install.bat | bat'
+                bat 'npm install -g heroku'
                 echo 'Deploying to Heroku'
                 withCredentials([string(credentialsId: 'heroku-api', variable : 'HEROKU_API' )]) {
                     bat 'docker login --username=_ --password=%HEROKU_API_KEY% registry.heroku.com'
