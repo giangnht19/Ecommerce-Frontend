@@ -5,7 +5,6 @@ export const ShopContext = createContext(null);
 
 const getDefaultCart = () => {
 
-    const server = 'https://ecommerce-backend-l8jr.onrender.com';
 
     let cart = {};
     for (let index = 0; index < 300 + 1; index++) {
@@ -15,6 +14,8 @@ const getDefaultCart = () => {
 }
 
 const ShopContextProvider = ({ children }) => {
+
+    const server = 'https://ecommerce-backend-l8jr.onrender.com';
 
     const [all_product, setAllProduct] = useState([]);
 
