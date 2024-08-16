@@ -38,7 +38,7 @@ pipeline {
                 bat "npm install -g heroku"
                 // Login to Heroku Docker registry
                 withCredentials([usernamePassword(credentialsId: 'herokuid', passwordVariable: 'PWD', usernameVariable: 'USR')]) {
-                    bat 'echo %PWD% | docker login --username=%USR% --password-stdin registry.heroku.com'
+                    bat "docker login -u=${env.USR} -p=${env.PWD} registry.heroku.com"
                 }
 
                 // Tag the Docker image
