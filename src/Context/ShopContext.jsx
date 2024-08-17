@@ -15,7 +15,7 @@ const getDefaultCart = () => {
 
 const ShopContextProvider = ({ children }) => {
 
-    const server = 'https://ecommerce-backend-l8jr.onrender.com';
+    const server = 'http://localhost:4000';
 
     const [all_product, setAllProduct] = useState([]);
 
