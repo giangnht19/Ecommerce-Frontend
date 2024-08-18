@@ -33,8 +33,8 @@ pipeline {
                     echo 'Pushing the image to Docker Hub'
                     bat 'docker push %IMAGE_NAME%:%IMAGE_TAG%'
                     
-                    // bat 'docker stop %APP_NAME%'
-                    // bat 'docker rm %APP_NAME%'
+                    bat 'docker stop %APP_NAME%'
+                    bat 'docker rm %APP_NAME%'
                     bat 'docker run -d -p 3000:3000 --name %APP_NAME% %IMAGE_NAME%:%IMAGE_TAG%'
                 }
             }
