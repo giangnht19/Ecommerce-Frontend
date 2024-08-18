@@ -5,6 +5,7 @@ pipeline {
         IMAGE_NAME = 'giangnht19/fashfrezy'
         IMAGE_TAG = 'latest'
         APP_NAME = 'fashfrenzy'
+        EMAIL_RECIPIENT = 'gn601800@gmail.com'
     }
     stages {
         stage('Build') {
@@ -21,6 +22,27 @@ pipeline {
             steps {
                 echo 'Testing the app'
                 bat 'npm test'
+            }
+            post {
+                success {
+                    script {
+                        archiveArtifacts artifacts: '**/*', excludes: ''
+                        mail to: "${env.EMAIL_RECIPIENT}",
+                             subject: "Jenkins Pipeline: Tests Stage - ${currentBuild.currentResult}",
+                             body: "The Unit and Integration Tests stage has completed with status: ${currentBuild.currentResult}.",
+                             attachmentsPattern: 'archive/**/*.log'
+                    }
+                }
+                failure {
+                    script {
+                        archiveArtifacts artifacts: '**/*', excludes: ''
+                        mail to: "${env.EMAIL_RECIPIENT}",
+                             subject: "Jenkins Pipeline: Tests Stage - ${currentBuild.currentResult}",
+                             body: "Unit tests failed. ${currentBuild.currentResult}.",
+                             attachmentsPattern: 'archive/**/*.log'
+                    }
+                }
+            }
         }
         stage ('Deploy') {
             steps {
@@ -49,6 +71,24 @@ pipeline {
             bat 'docker image prune -a -f'
             bat 'docker logout'
             echo 'Build completed'
+        }
+        success {
+            script {
+                archiveArtifacts artifacts: '**/*', excludes: ''
+                mail to: "${env.EMAIL_RECIPIENT}",
+                     subject: "Pipeline Status",
+                     body: "${currentBuild.currentResult}",
+                     attachmentsPattern: 'archive/**/*.log'
+            }
+        }
+        failure {
+            script {
+                archiveArtifacts artifacts: '**/*', excludes: ''
+                mail to: "${env.EMAIL_RECIPIENT}",
+                     subject: "Build Failed",
+                     body: "${currentBuild.currentResult}",
+                     attachmentsPattern: 'archive/**/*.log'
+            }
         }
     }
 }
