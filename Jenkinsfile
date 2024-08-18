@@ -30,6 +30,7 @@ pipeline {
                         mail to: "${env.EMAIL_RECIPIENT}",
                              subject: "Jenkins Pipeline: Tests Stage - ${currentBuild.currentResult}",
                              body: "The Unit Tests stage has completed with status: ${currentBuild.currentResult}.",
+                             attachmentsPattern: 'archive/**/*.log'
                     }
                 }
                 failure {
@@ -37,6 +38,7 @@ pipeline {
                         mail to: "${env.EMAIL_RECIPIENT}",
                              subject: "Jenkins Pipeline: Tests Stage - ${currentBuild.currentResult}",
                              body: "Unit tests failed. ${currentBuild.currentResult}.",
+                             attachmentsPattern: 'archive/**/*.log'
                     }
                 }
             }
@@ -57,7 +59,6 @@ pipeline {
         stage('Release') {
             steps {
                 echo 'Releasing the app'
-                
                 bat 'heroku container:release web -a %APP_NAME%'
             }
         }
@@ -74,6 +75,7 @@ pipeline {
                 mail to: "${env.EMAIL_RECIPIENT}",
                      subject: "Pipeline Status",
                      body: "${currentBuild.currentResult}",
+                     attachmentsPattern: 'archive/**/*.log'
             }
         }
         failure {
@@ -81,6 +83,7 @@ pipeline {
                 mail to: "${env.EMAIL_RECIPIENT}",
                      subject: "Build Failed",
                      body: "${currentBuild.currentResult}",
+                     attachmentsPattern: 'archive/**/*.log'
             }
         }
     }
