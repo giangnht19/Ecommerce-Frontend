@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        // HEROKU_API_KEY = credentials('heroku-api')
+        HEROKU_API_KEY = credentials('heroku-api')
         IMAGE_NAME = 'giangnht19/fashfrezy'
         IMAGE_TAG = 'latest'
         APP_NAME = 'fashfrenzy'
@@ -33,7 +33,7 @@ pipeline {
                     echo 'Pushing the image to Docker Hub'
                     bat 'docker push %IMAGE_NAME%:%IMAGE_TAG%'
                     echo 'Run the container'
-                    bat 'docker run -d -p 80:80 %IMAGE_NAME%:%IMAGE_TAG%'
+                    bat 'docker run -d -p 3000:3000 %IMAGE_NAME%:%IMAGE_TAG%'
                 }
             }
         }
