@@ -32,12 +32,11 @@ pipeline {
                 echo 'Deploy Heroku Container Registry'   
                 withCredentials([string(credentialsId: 'dockerhub-pwd', variable: 'dockerhubpwd')]) {
                     bat 'docker login -u giangnht19 -p %dockerhubpwd%'
+                    bat 'docker push %IMAGE_NAME%:%IMAGE_TAG%'
                     bat 'heroku container:login'
                     bat 'docker tag %IMAGE_NAME%:%IMAGE_TAG% registry.heroku.com/%APP_NAME%/web'
                     bat 'docker push registry.heroku.com/%APP_NAME%/web'
                 }
-
-                
             }
         }
         stage('Release') {
