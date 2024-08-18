@@ -32,9 +32,15 @@ pipeline {
                     bat 'docker login -u giangnht19 -p %dockerhubpwd%'
                     echo 'Pushing the image to Docker Hub'
                     bat 'docker push %IMAGE_NAME%:%IMAGE_TAG%'
+                    // Pull the latest Docker images
+                    sh "docker-compose -f docker-compose.yml pull"
+                    
+                    // Stop and remove existing containers
+                    sh "docker-compose -f docker-compose.yml down"
+                    
+                    // Start containers with updated images
+                    sh "docker-compose -f docker-compose.yml up -d"
                 }
-                echo 'Run the container'
-                bat 'docker run -d -p 3000:3000 %IMAGE_NAME%:%IMAGE_TAG%'
             }
         }
         stage('Release') {
