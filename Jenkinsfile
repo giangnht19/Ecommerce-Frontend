@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        HEROKU_API_KEY = credentials('heroku-api')
+        // HEROKU_API_KEY = credentials('heroku-api')
         IMAGE_NAME = 'giangnht19/fashfrezy'
         IMAGE_TAG = 'latest'
         APP_NAME = 'fashfrenzy'
@@ -28,18 +28,22 @@ pipeline {
         stage ('Deploy') {
             steps {
                 echo 'Login to Docker'
-                echo 'Deploy Heroku Container Registry'   
                 withCredentials([string(credentialsId: 'dockerhub-pwd', variable: 'dockerhubpwd')]) {
                     bat 'docker login -u giangnht19 -p %dockerhubpwd%'
+                    echo 'Pushing the image to Docker Hub'
                     bat 'docker push %IMAGE_NAME%:%IMAGE_TAG%'
-                    bat 'heroku container:login'
-                    bat 'docker tag %IMAGE_NAME%:%IMAGE_TAG% registry.heroku.com/%APP_NAME%/web'
-                    bat 'docker push registry.heroku.com/%APP_NAME%/web'
                 }
+                echo 'Run the container'
+                bat 'docker run -d -p 3000:3000 %IMAGE_NAME%:%IMAGE_TAG%'
             }
         }
         stage('Release') {
             steps {
+                echo 'Deploy Heroku Container Registry'   
+                bat 'heroku container:login'
+                // bat 'docker login --username=_ --password=%HEROKU_API_KEY% registry.heroku.com'
+                bat 'docker tag %IMAGE_NAME%:%IMAGE_TAG% registry.heroku.com/%APP_NAME%/web'
+                bat 'docker push registry.heroku.com/%APP_NAME%/web'
                 echo 'Releasing the app'
                 bat 'heroku container:release web -a %APP_NAME%'
             }
