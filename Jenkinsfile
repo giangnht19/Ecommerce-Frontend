@@ -32,14 +32,8 @@ pipeline {
                     bat 'docker login -u giangnht19 -p %dockerhubpwd%'
                     echo 'Pushing the image to Docker Hub'
                     bat 'docker push %IMAGE_NAME%:%IMAGE_TAG%'
-                    // Pull the latest Docker images
-                    sh "docker-compose pull"
-                    
-                    // Stop and remove existing containers
-                    sh "docker-compose down"
-                    
-                    // Start containers with updated images
-                    sh "docker-compose -d"
+                    echo 'Run the container'
+                    bat 'docker run -d -p 80:80 %IMAGE_NAME%:%IMAGE_TAG%'
                 }
             }
         }
