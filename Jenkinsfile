@@ -32,11 +32,10 @@ pipeline {
                     bat 'docker login -u giangnht19 -p %dockerhubpwd%'
                     echo 'Pushing the image to Docker Hub'
                     bat 'docker push %IMAGE_NAME%:%IMAGE_TAG%'
-                    echo 'Stop and remove the container if it is already running'
-                    bat 'docker stop $(docker ps -a -q --filter ancestor=%IMAGE_NAME%:%IMAGE_TAG%)'
-                    bat 'docker rm $(docker ps -a -q --filter ancestor=%IMAGE_NAME%:%IMAGE_TAG%)'
-                    echo 'Run the container'
-                    bat 'docker run -d -p 3000:3000 %IMAGE_NAME%:%IMAGE_TAG%'
+                    
+                    bat 'docker-compose pull'
+                    bat 'docker-compose down'
+                    bat 'docker-compose up -d'
                 }
             }
         }
