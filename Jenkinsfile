@@ -24,24 +24,6 @@ pipeline {
                 echo 'Using Jest to implement unit tests'
                 bat 'npm test'
             }
-            post {
-                success {
-                    script {
-                        mail to: "${env.EMAIL_RECIPIENT}",
-                             subject: "Jenkins Pipeline: Tests Stage - ${currentBuild.currentResult}",
-                             body: "The Unit Tests stage has completed with status: ${currentBuild.currentResult}.",
-                             attachmentsPattern: 'archive/**/*.log'
-                    }
-                }
-                failure {
-                    script {
-                        mail to: "${env.EMAIL_RECIPIENT}",
-                             subject: "Jenkins Pipeline: Tests Stage - ${currentBuild.currentResult}",
-                             body: "Unit tests failed. ${currentBuild.currentResult}.",
-                             attachmentsPattern: 'archive/**/*.log'
-                    }
-                }
-            }
         }
         stage ('Deploy') {
             steps {
@@ -82,7 +64,7 @@ pipeline {
             script {
                 mail to: "${env.EMAIL_RECIPIENT}",
                      subject: "Build Failed",
-                     body: "${currentBuild.currentResult}",
+                     body: " ${currentBuild.currentResult}. Check Jenkins Log for more information.",
                      attachmentsPattern: 'archive/**/*.log'
             }
         }
