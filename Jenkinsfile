@@ -14,6 +14,7 @@ pipeline {
 
                 checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'github-token', url: 'https://github.com/giangnht19/Ecommerce-Frontend.git']])
 
+                echo 'Installing dependencies'
                 bat 'npm install'
                 bat 'docker build -t %IMAGE_NAME%:%IMAGE_TAG% .'
             }
