@@ -20,11 +20,7 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Testing the app'
-
-                catchError(buildResult: 'SUCCESS') {
-                    bat 'npm run test'
-                }
-            }
+                bat 'npm test'
         }
         stage ('Deploy') {
             steps {
