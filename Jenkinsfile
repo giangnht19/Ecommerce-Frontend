@@ -32,7 +32,6 @@ pipeline {
                     bat 'docker login -u giangnht19 -p %dockerhubpwd%'
                     echo 'Pushing the image to Docker Hub'
                     bat 'docker push %IMAGE_NAME%:%IMAGE_TAG%'
-                    
                     echo 'Deploying the app'
                     bat 'docker stop %APP_NAME%'
                     bat 'docker rm %APP_NAME%'
