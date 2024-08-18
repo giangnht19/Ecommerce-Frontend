@@ -33,6 +33,7 @@ pipeline {
                     echo 'Pushing the image to Docker Hub'
                     bat 'docker push %IMAGE_NAME%:%IMAGE_TAG%'
                     
+                    echo 'Deploying the app'
                     bat 'docker stop %APP_NAME%'
                     bat 'docker rm %APP_NAME%'
                     bat 'docker run -d -p 3000:3000 --name %APP_NAME% %IMAGE_NAME%:%IMAGE_TAG%'
@@ -41,7 +42,7 @@ pipeline {
         }
         stage('Release') {
             steps {
-                echo 'Deploy Heroku Container Registry'   
+                echo 'Release the app on Heroku'   
                 bat 'heroku container:login'
                 // bat 'docker login --username=_ --password=%HEROKU_API_KEY% registry.heroku.com'
                 bat 'docker tag %IMAGE_NAME%:%IMAGE_TAG% registry.heroku.com/%APP_NAME%/web'
