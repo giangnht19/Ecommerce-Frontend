@@ -21,6 +21,7 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Testing the app'
+                echo 'Using Jest to implement unit tests'
                 bat 'npm test'
             }
             post {
@@ -28,8 +29,7 @@ pipeline {
                     script {
                         mail to: "${env.EMAIL_RECIPIENT}",
                              subject: "Jenkins Pipeline: Tests Stage - ${currentBuild.currentResult}",
-                             body: "The Unit and Integration Tests stage has completed with status: ${currentBuild.currentResult}.",
-                             attachmentsPattern: 'archive/**/*.log'
+                             body: "The Unit Tests stage has completed with status: ${currentBuild.currentResult}.",
                     }
                 }
                 failure {
@@ -37,7 +37,6 @@ pipeline {
                         mail to: "${env.EMAIL_RECIPIENT}",
                              subject: "Jenkins Pipeline: Tests Stage - ${currentBuild.currentResult}",
                              body: "Unit tests failed. ${currentBuild.currentResult}.",
-                             attachmentsPattern: 'archive/**/*.log'
                     }
                 }
             }
@@ -75,7 +74,6 @@ pipeline {
                 mail to: "${env.EMAIL_RECIPIENT}",
                      subject: "Pipeline Status",
                      body: "${currentBuild.currentResult}",
-                     attachmentsPattern: 'archive/**/*.log'
             }
         }
         failure {
@@ -83,7 +81,6 @@ pipeline {
                 mail to: "${env.EMAIL_RECIPIENT}",
                      subject: "Build Failed",
                      body: "${currentBuild.currentResult}",
-                     attachmentsPattern: 'archive/**/*.log'
             }
         }
     }
