@@ -26,7 +26,6 @@ pipeline {
             post {
                 success {
                     script {
-                        archiveArtifacts artifacts: '**/*', excludes: ''
                         mail to: "${env.EMAIL_RECIPIENT}",
                              subject: "Jenkins Pipeline: Tests Stage - ${currentBuild.currentResult}",
                              body: "The Unit and Integration Tests stage has completed with status: ${currentBuild.currentResult}.",
@@ -35,7 +34,6 @@ pipeline {
                 }
                 failure {
                     script {
-                        archiveArtifacts artifacts: '**/*', excludes: ''
                         mail to: "${env.EMAIL_RECIPIENT}",
                              subject: "Jenkins Pipeline: Tests Stage - ${currentBuild.currentResult}",
                              body: "Unit tests failed. ${currentBuild.currentResult}.",
@@ -74,7 +72,6 @@ pipeline {
         }
         success {
             script {
-                archiveArtifacts artifacts: '**/*', excludes: ''
                 mail to: "${env.EMAIL_RECIPIENT}",
                      subject: "Pipeline Status",
                      body: "${currentBuild.currentResult}",
@@ -83,7 +80,6 @@ pipeline {
         }
         failure {
             script {
-                archiveArtifacts artifacts: '**/*', excludes: ''
                 mail to: "${env.EMAIL_RECIPIENT}",
                      subject: "Build Failed",
                      body: "${currentBuild.currentResult}",
